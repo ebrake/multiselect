@@ -146,6 +146,12 @@ if (typeof jQuery === 'undefined') {
                         } else {
                             self.$left.find('option, optgroup').mShow();
                         }
+                        if ( typeof self.callbacks.afterSearchInLeft == 'function' ) {
+                            if ($toShow == undefined) {
+                                $toShow = self.$left.find('option:not(.hidden)');
+                            }
+                            self.callbacks.afterSearchInLeft( $toShow );
+                        }
                     });
                 }
 
@@ -159,6 +165,12 @@ if (typeof jQuery === 'undefined') {
                             var $grpShow = self.$right.find('option:not(.hidden)').parent('optgroup').mShow();
                         } else {
                             self.$right.find('option, optgroup').mShow();
+                        }
+                        if ( typeof self.callbacks.afterSearchInRight == 'function' ) {
+                            if ($toShow == undefined) {
+                                $toShow = self.$right.find('option:not(.hidden)');
+                            }
+                            self.callbacks.afterSearchInRight( $toShow );
                         }
                     });
                 }
@@ -572,6 +584,20 @@ if (typeof jQuery === 'undefined') {
              *  @attribute $options HTML object (the option[s] which was selected to be moved)
             **/
             afterMoveToLeft: function($left, $right, $options) {},
+
+            /*  will be executed each time after searching option[s] in left panel
+             *
+             *  @method afterSearchInLeft
+             *  @attribute $showedOptions HTML object (the option[s] which was shown after search)
+            **/
+            afterSearchInLeft: function($showedOptions) {},
+
+            /*  will be executed each time after searching option[s] in right panel
+             *
+             *  @method afterSearchInRight
+             *  @attribute $showedOptions HTML object (the option[s] which was shown after search)
+            **/
+            afterSearchInRight: function($showedOptions) {},
 
             /** will be executed each time before moving option[s] up
              *
